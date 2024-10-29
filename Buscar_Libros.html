@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Libros</title>
+</head>
+<body>
+    <h2>Buscar Libro</h2>
+    <input type="text" id="bookName" placeholder="Nombre del libro">
+    <button onclick="searchBook()">Buscar</button>
+    <div id="result"></div>
+
+
+    <script>
+        async function searchBook() {
+            const bookName = document.getElementById("bookName").value;
+            const response = await fetch(`https://openlibrary.org/search.json?title=${bookName}`);
+            const data = await response.json();
+            const book = data.docs[0];
+
+
+            document.getElementById("result").innerHTML = book
+                ? `<h3>${book.title}</h3><p>Autor: ${book.author_name?.[0] || 'No disponible'}</p>`
+                : "Libro no encontrado";
+        }
+    </script>
+</body>
+</html>
